@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>中高级web前端面试总结之组件设计 | meepo&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="MVVM框架的流行让web前端的开发更加专注于数据和逻辑，而很少亲自操作dom来处理视图，同时，组件化也是MVVM框架带来重要特性之一，是中高级前端面试基本都会考察的一个点。本文不会过多地讨论组件化设计的理念或者思路(因为本人还不够格，哈哈哈)，重点是结合几场面试经历来讲讲要怎么回答这类问题。">
+<meta name="keywords" content="前端面试">
+<meta property="og:type" content="article">
+<meta property="og:title" content="中高级web前端面试总结之组件设计">
+<meta property="og:url" content="https://www.huanghuiqian.com/2019/01/08/中高级web前端面试总结之组件设计/index.html">
+<meta property="og:site_name" content="meepo&#39;s blog">
+<meta property="og:description" content="MVVM框架的流行让web前端的开发更加专注于数据和逻辑，而很少亲自操作dom来处理视图，同时，组件化也是MVVM框架带来重要特性之一，是中高级前端面试基本都会考察的一个点。本文不会过多地讨论组件化设计的理念或者思路(因为本人还不够格，哈哈哈)，重点是结合几场面试经历来讲讲要怎么回答这类问题。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://www.huanghuiqian.com/images/blackface.jpg">
+<meta property="og:image" content="https://www.huanghuiqian.com/images/cascader-props.png">
+<meta property="og:image" content="https://www.huanghuiqian.com/images/cascader.png">
+<meta property="og:updated_time" content="2019-01-07T17:15:10.878Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="中高级web前端面试总结之组件设计">
+<meta name="twitter:description" content="MVVM框架的流行让web前端的开发更加专注于数据和逻辑，而很少亲自操作dom来处理视图，同时，组件化也是MVVM框架带来重要特性之一，是中高级前端面试基本都会考察的一个点。本文不会过多地讨论组件化设计的理念或者思路(因为本人还不够格，哈哈哈)，重点是结合几场面试经历来讲讲要怎么回答这类问题。">
+<meta name="twitter:image" content="https://www.huanghuiqian.com/images/blackface.jpg">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">meepo&#39;s blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <!-- <a href="/" id="subtitle">nothing</a> -->
+          <a class="icon icon-github" href="https://github.com/greedy747"></a>
+          <a class="icon icon-jianshu" href="https://www.jianshu.com/u/216a5e868cf8">
+        </a></h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <!-- <a id="nav-search-btn" class="nav-icon" title="Search"></a> -->
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://www.huanghuiqian.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-中高级web前端面试总结之组件设计" class="article article-type-post" itemscope="" itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/08/中高级web前端面试总结之组件设计/" class="article-date">
+  <time datetime="2019-01-07T17:14:00.000Z" itemprop="datePublished">2019-01-08</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/web前端/">web前端</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      中高级web前端面试总结之组件设计
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>MVVM框架的流行让web前端的开发更加专注于数据和逻辑，而很少亲自操作dom来处理视图，同时，组件化也是MVVM框架带来重要特性之一，是中高级前端面试基本都会考察的一个点。本文不会过多地讨论组件化设计的理念或者思路(因为本人还不够格，哈哈哈)，重点是结合几场面试经历来讲讲要怎么回答这类问题。<br><a id="more"></a></p>
+<h2 id="一、问题"><a href="#一、问题" class="headerlink" title="一、问题"></a>一、问题</h2><p>一般面试进行到后面几轮，基本上都会问这个问题，这也确实一个好问题。一般的提问形式会是，“你对组件设计有什么经验”或者“如果要你设计一个XX组件，你会怎么做”。或者直接给出详细需求，要求面试者直接手写出来。很明显，这个问题主要考察面试者是否有足够的组件实战经验或者设计心得。<br><img src="/images/blackface.jpg" width="250px" height="250px"><br>然而，虽然工作中写了不少组件，当真正被问到这种问题的时候，还是会有些不知所措，因为面试中问到的往往都是非常基础的组件，比如级联组件、轮播等。但是实际业务中，这些基础组件通常都会使用开源的或者现成的，很多都没有自己去实现过（就算是面试官他自己也一样吧）。而对于实际的业务组件，以我的经验来看，更多的是一些UI上的封装组合，偶尔会有一些功能的mixin。所以，在一个短时间里要回答好这种问题，并不是那么容易，尤其碰到一些比较“执着”的面试官，下面我会举一个例子。</p>
+<h2 id="二、例子-某巢2面"><a href="#二、例子-某巢2面" class="headerlink" title="二、例子(某巢2面)"></a>二、例子(某巢2面)</h2><p>Q：如果要设计一个自动适应宽高的输入框组件，要怎么设计（开门见山，面试官一看就是奋战在编码一线的老码农）<br>A：emmm。。。好像一下子没啥思路。。。<br>Q: 你可以讲一下你想到的东西，比如要设计哪些接口啊，怎么封装啊？<br>A：emmm。。。这个组件应该可以接收一些关于样式上的props，还会有个开关属性来启用这个功能，blablabla…..至于这个自动适应的功能，我还没啥想法。。（然后面试官开始引导我，然后我越来越蒙。。。）<br>Q：那我们换一个，有没有封装过list组件？<br>A：什么list组件，是那种list容器吗，接收一个组件作为要展示的内容，容器本身具有loadmore之类的功能？<br>Q：差不多，但是我们的要展示的组件可能有多种，比如banner啊，文本啊，图片啊，list组件需要根据返回的数据来渲染对应的组件<br>A：emmm。。。那这些组件的模板是固定的吗，还是后台返回的?<br>Q：后台返回的。<br>A：emm…如果是基于vue的组件的话，应该是要用到作用域插槽，blabla（已经不知道自己在讲啥。。。）<br>Q：这个问题呢，还可以问的更深，比如如何保证这个组件的性能（我猜面试官想问，高性能无限滚动？），那讲一下常用的那种级联组件是怎么实现？<br>A：这个我没自己实现过，应该要接收一个data数组，结构大概是这样的，blabla….组件提供的事件接口包括一个selectChange吧，实应该会用到递归吧，其他的api，应该就是一些UI方面的吧，比如组件大小啊什么的。blabla…</p>
+<p>从以上的面试过程来看，面试官很看重面试者组件设计的能力，准备也很充分，可以一直问到面试者回答不出来。面试官还给我讲了他如何重新写了一个轮播组件来兼容低版本安卓机卡顿的问题（低版本安卓机无法利用css开启硬件加速，用浏览器原生支持的scroll来实现？）。对于没有从0实现过这些组件的人来说，实在是不容易啊。当然了，对于面试官的穷追猛打，本人并不是完全赞同。实际上，在面试过程中，很多时候我不能完全get到面试官的点，泛泛而谈的话好像显得没有真才实学，具体到实处回答的话，又好像要说的细节太多，容易坑了自己。</p>
+<h2 id="三、拆招要诀"><a href="#三、拆招要诀" class="headerlink" title="三、拆招要诀"></a>三、拆招要诀</h2><h4 id="3-1-内功心法"><a href="#3-1-内功心法" class="headerlink" title="3.1 内功心法"></a>3.1 内功心法</h4><p>虽然不能把那么多常见的组件一一亲自实现，但是基本上组件设计都会遵循一定的原则或者最佳实践，比如以下这些</p>
+<ul>
+<li>单一职责</li>
+<li>粒度尽量小</li>
+<li>Container and Presentational pattern(react 容器和展示组件分离)</li>
+<li>stateless function component(react SFC提高性能)</li>
+<li>扁平访问</li>
+<li>…..</li>
+</ul>
+<p>这些都是组件设计的内功心法，如果能讲的比较好的话，面试官应该也会比较开心吧。不过这些并不是教条性质的，具体怎么实现还得结合实际情况。比如，有时候组件粒度不划分到那么小，反而更方便数据管理。在网上搜了一些大神们总结的一些套路，比如阿里大牛写的这几点<a href="https://github.com/react-component/react-component.github.io/blob/master/docs/zh-cn/component-design.md" target="_blank" rel="noopener">react组件设计原则</a>,又比如<a href="https://medium.com/walmartlabs/make-your-react-components-pretty-a1ae4ec0f56e" target="_blank" rel="noopener">Make Your React Components Pretty</a></p>
+<h4 id="3-2-招式练习"><a href="#3-2-招式练习" class="headerlink" title="3.2 招式练习"></a>3.2 招式练习</h4><p>建议多总结一下平时用到的一些基础组件的实现原理或者设计思路，比如input、textarea、select、modal对话框、级联组件cascader等等，可以多参考学习一下开源方案，比如基于vue的<a href="https://www.iviewui.com/" target="_blank" rel="noopener">iview</a>，前段时间爆出彩蛋事件的<a href="https://ant.design/" target="_blank" rel="noopener">ant design</a>。有时间的话，最好自己去实现一两个玩一玩，动手去写了，也许能有一些不一样的发现。下面是我自己动手实践了一下cascader级联组件，样式直接copy了iview的，逻辑上，并没有像iview那样使用递归，因为递归对于机器来说并不高效，而且不小心容易引起stack overflow（max call stack size exceeded)….</p>
+<h2 id="四、招式演练（级联组件）"><a href="#四、招式演练（级联组件）" class="headerlink" title="四、招式演练（级联组件）"></a>四、招式演练（级联组件）</h2><p>要封装一个组件或者功能模块，比较好的方式是从它的调用方式入手，能想到的最简单的cascader的调用方式大概这样<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;Cascader :list=<span class="string">"list"</span> v-model=<span class="string">"value"</span> @selectChange=<span class="string">"handleChange"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>如果想要实现更复杂的功能，可以参考开源方案，比如iview的<a href="https://www.iviewui.com/components/cascader" target="_blank" rel="noopener">级联组件</a>就提供了很多选项,如下图<br><img src="/images/cascader-props.png" width="600px" height="600px"><br>这里实现最基本的功能，主要的逻辑代码总共不超过40行。<br>模板：<br><figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cascader-wrap"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"input-wrap"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">"text"</span> <span class="attr">class</span>=<span class="string">"cascader-input"</span> @<span class="attr">click</span>=<span class="string">"showDrop = !showDrop"</span> <span class="attr">:value</span>=<span class="string">"res"</span> <span class="attr">readonly</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">i</span> <span class="attr">class</span>=<span class="string">"icon-close"</span>&gt;</span><span class="tag">&lt;/<span class="name">i</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">transition</span> <span class="attr">name</span>=<span class="string">"fade"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">"cascader-dropdown"</span> @<span class="attr">click.stop</span>=<span class="string">"handleClick"</span> <span class="attr">v-show</span>=<span class="string">"showDrop"</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">ul</span> <span class="attr">v-for</span>=<span class="string">"(list,index) in lists"</span> <span class="attr">class</span>=<span class="string">"cascader-menu"</span>&gt;</span></span><br><span class="line">          <span class="tag">&lt;<span class="name">li</span></span></span><br><span class="line"><span class="tag">            <span class="attr">class</span>=<span class="string">"cascader-item"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">v-for</span>=<span class="string">"item in list"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">:data-id</span>=<span class="string">"item.value"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">:data-level</span>=<span class="string">"index"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">:key</span>=<span class="string">"item.value"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">:class</span>=<span class="string">"current[index] &amp;&amp; item.value === current[index] ? 'cascader-active' : ''"</span></span></span><br><span class="line"><span class="tag">          &gt;</span>&#123;&#123;item.label || item.value&#125;&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">ul</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">transition</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>逻辑：<br><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">"Cascader"</span>,</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      showDrop: <span class="literal">false</span>,</span><br><span class="line">      res: <span class="string">""</span>,</span><br><span class="line">      current: <span class="keyword">this</span>.value || [],</span><br><span class="line">      lists: [<span class="keyword">this</span>.list || []]</span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  props: [<span class="string">"list"</span>, <span class="string">"value"</span>],</span><br><span class="line">  methods: &#123;</span><br><span class="line">    handleClick(e) &#123;</span><br><span class="line">      <span class="keyword">let</span> data = e.target.dataset,</span><br><span class="line">        level = <span class="built_in">Number</span>(data.level),</span><br><span class="line">        id = data.id;</span><br><span class="line">      <span class="keyword">if</span> (<span class="keyword">this</span>.current[level] !== id) &#123;</span><br><span class="line">        <span class="keyword">this</span>.current = <span class="keyword">this</span>.current.slice(<span class="number">0</span>, level);</span><br><span class="line">        <span class="keyword">this</span>.current.push(id);</span><br><span class="line">        <span class="keyword">let</span> arr = <span class="keyword">this</span>.lists[level].filter(<span class="function"><span class="params">item</span> =&gt;</span> &#123;</span><br><span class="line">          <span class="keyword">return</span> item.value === id;</span><br><span class="line">        &#125;);</span><br><span class="line">        <span class="keyword">if</span> (arr[<span class="number">0</span>].children &amp;&amp; arr[<span class="number">0</span>].children.length) &#123;</span><br><span class="line">          <span class="keyword">this</span>.lists = <span class="keyword">this</span>.lists.slice(<span class="number">0</span>, level + <span class="number">1</span>);</span><br><span class="line">          <span class="keyword">this</span>.lists.push(arr[<span class="number">0</span>].children);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">          <span class="comment">//选择最后一列时，确定value以及emit各种事件</span></span><br><span class="line">          <span class="keyword">this</span>.res = <span class="keyword">this</span>.current.slice();</span><br><span class="line">          <span class="keyword">this</span>.$emit(<span class="string">"input"</span>, <span class="keyword">this</span>.current);</span><br><span class="line">          <span class="keyword">this</span>.showDrop = <span class="literal">false</span>;</span><br><span class="line">          <span class="keyword">this</span>.$emit(<span class="string">"on-change"</span>, <span class="keyword">this</span>.current);</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>效果大概就如下图这样(<a href="https://jsfiddle.net/hq120901/6yehmL7r/" target="_blank" rel="noopener">在jsfiddle上体验</a>)：<br><img src="/images/cascader.png" width="350px" height="350px"><br>实际上，很多组件抽出最核心的功能来，码量非常小，但为了业务的需要，往往需要扩充很多功能或者添加各种开关，甚至做一些必要的优化</p>
+<h2 id="五、小结"><a href="#五、小结" class="headerlink" title="五、小结"></a>五、小结</h2><p>组件设计这类问题，既可以很笼统，又可以很具体，在面试那么短的时间里，要回答得很完美并不是那么容易。平时有空的话，还是多动手造一些轮子，或者在面试之前，挑一两个自己比较满意的组件，好好总结总结。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://www.huanghuiqian.com/2019/01/08/中高级web前端面试总结之组件设计/" data-id="cjqmkz9eb000014pzyp5sbnl5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/前端面试/">前端面试</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/web前端/">web前端</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/前端面试/">前端面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2019/01/08/中高级web前端面试总结之组件设计/">中高级web前端面试总结之组件设计</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 meepo<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
